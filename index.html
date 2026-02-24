@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สมุนไพรพื้นบ้านไทย - ภูมิปัญญาไทย</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Inter', 'IBM Plex Sans Thai', system-ui, sans-serif;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    .nav-link {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .nav-link::after {
+      display: none;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(99, 102, 241, 0.1);
+      color: #6366f1;
+    }
+
+    .herb-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .herb-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(99, 102, 241, 0.05)),
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(16, 185, 129, 0.02) 10px, rgba(16, 185, 129, 0.02) 20px);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+
+    .herb-card:hover::before {
+      opacity: 1;
+    }
+
+    .herb-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .herb-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 4px solid transparent;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(16, 185, 129, 0.02) 20px,
+        rgba(16, 185, 129, 0.02) 40px
+      );
+    }
+
+    .section-card:hover {
+      transform: translateX(12px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+      border-left-color: #10b981;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px),
+        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);
+      opacity: 0.6;
+    }
+
+    .hero-gradient::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    }
+
+    .page-section {
+      display: none;
+    }
+
+    .page-section.active {
+      display: block;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    .benefit-badge {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-left: 4px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .benefit-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(16, 185, 129, 0.05) 10px,
+        rgba(16, 185, 129, 0.05) 20px
+      );
+      border-radius: 50%;
+      transform: translate(30%, -30%);
+    }
+
+    .benefit-badge:hover {
+      transform: scale(1.05) translateY(-5px);
+      border-left-color: #10b981;
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+    }
+
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="w-full h-full overflow-auto" style="background: #f8fafc;"><!-- Navigation Bar -->
+   <nav class="sticky-nav shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-3"><span class="text-4xl">🌿</span>
+       <div>
+        <h1 id="nav-title" class="text-2xl font-bold" style="color: #047857;">สมุนไพรพื้นบ้านไทย</h1>
+        <p id="nav-tagline" class="text-sm" style="color: #059669;">ภูมิปัญญาไทยเพื่อสุขภาพที่ดี</p>
+       </div>
+      </div>
+      <div class="flex space-x-6"><a href="#" class="nav-link active text-lg font-semibold" data-page="home" style="color: #047857;">หน้าแรก</a> <a href="#" class="nav-link text-lg font-semibold" data-page="knowledge" style="color: #047857;">ความรู้</a> <a href="#" class="nav-link text-lg font-semibold" data-page="list" style="color: #047857;">รายชื่อสมุนไพร</a> <a href="#" class="nav-link text-lg font-semibold" data-page="benefits" style="color: #047857;">สรรพคุณ</a> <a href="#" class="nav-link text-lg font-semibold" data-page="usage" style="color: #047857;">วิธีใช้</a> <a href="#" class="nav-link text-lg font-semibold" data-page="about" style="color: #047857;">เกี่ยวกับเรา</a>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Page: Home -->
+   <div id="page-home" class="page-section active">
+    <section class="hero-gradient py-20 px-6">
+     <div class="max-w-6xl mx-auto text-center">
+      <div class="mb-6"><span class="text-8xl">🌿</span>
+      </div>
+      <h1 id="hero-title" class="text-6xl font-bold mb-6 text-white">สมุนไพรพื้นบ้านไทย</h1>
+      <p class="text-2xl text-green-50 mb-4">คลังความรู้ภูมิปัญญาไทยที่สืบทอดมายาวนาน</p>
+      <p class="text-xl text-green-100 max-w-3xl mx-auto">สมุนไพรพื้นบ้านไทยเป็นมรดกทางวัฒนธรรมที่มีคุณค่า ช่วยรักษาและบำรุงสุขภาพของคนไทยมายาวนาน เว็บไซต์นี้รวบรวมความรู้เกี่ยวกับสมุนไพรไทย 10 ชนิด เพื่อเผยแพร่ภูมิปัญญาสู่คนรุ่นใหม่</p>
+     </div>
+    </section>
+    <section class="max-w-7xl mx-auto px-6 py-16">
+     <h2 class="text-5xl font-bold text-center mb-4" style="color: #047857;">สมุนไพรเด่น 10 ชนิด</h2>
+     <p class="text-xl text-center mb-12" style="color: #059669;">คลิกเพื่อดูรายละเอียดเพิ่มเติม</p>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+     <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="แกแล">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c1.jpg" 
+         alt="แกแล" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">แกแล</h3>
+  <p class="text-emerald-600">บำรุงร่างกาย</p>
+
+</div>
+</div>
+ 
+      <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="แก่นฝาง">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c10.jpg" 
+         alt="แก่นฝาง" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">แก่นฝาง</h3>
+  <p class="text-emerald-600">บำรุงเลือด แก้ร้อนใน</p>
+
+</div>
+</div>
+
+  
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="เลือดแรด">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c2.jpg" 
+         alt="เลือดแรด" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">เลือดแรด</h3>
+  <p class="text-emerald-600">บำรุงเลือด</p>
+
+</div>
+</div>
+
+  <!-- 5 -->
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="เสนียด">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c3.jpg" 
+         alt="เสนียด" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">เสนียด</h3>
+  <p class="text-emerald-600">แก้ท้องเสีย สมานแผล</p>
+
+</div>
+</div>
+
+  
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="คำฝอย">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c4.jpg" 
+         alt="คำฝอย" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">คำฝอย</h3>
+  <p class="text-emerald-600">บำรุงโลหิต กระตุ้นการไหลเวียน</p>
+
+</div>
+</div>
+
+  <!-- 7 -->
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="ว่านหางช้าง">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c5.jpg" 
+         alt="ว่านหางช้าง" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">ว่านหางช้าง</h3>
+  <p class="text-emerald-600">แก้ฟกช้ำ เคล็ดขัดยอก</p>
+
+</div>
+</div>
+  <!-- 8 -->
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="ตองแตก">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c6.jpg" 
+         alt="ตองแตก" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">ตองแตก</h3>
+  <p class="text-emerald-600">แก้ไข้ แก้ร้อนใน</p>
+
+</div>
+</div>
+  <!-- 9 -->
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="เทียนดำ">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c7.jpg" 
+         alt="เทียนดำ" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">เทียนดำ</h3>
+  <p class="text-emerald-600">ขับลม แก้ท้องอืด</p>
+
+</div>
+</div>
+
+  <!-- 10 -->
+  <div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="แก่นขี้เหล็ก">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c8.jpg" 
+         alt="แก่นขี้เหล็ก" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">แก่นขี้เหล็ก</h3>
+  <p class="text-emerald-600">บำรุงร่างกาย ช่วยให้นอนหลับ</p>
+
+</div>
+</div>
+<div class="herb-card bg-white rounded-2xl p-6 shadow-lg text-center" data-herb="ไพล">
+       <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+
+  <div class="overflow-hidden">
+    <img src="images/c9.jpg" 
+         alt="ไพล" 
+         class="mx-auto w-32 h-32 object-cover rounded-xl mb-4 
+                transform transition duration-500 hover:scale-110">
+  </div>
+
+  <h3 class="text-xl font-bold text-emerald-700 mb-2">ไพล</h3>
+  <p class="text-emerald-600">แก้ฟกช้ำ ลดปวดบวม</p>
+
+</div>
+</div>
+</div>
+    </section>
+    <section class="max-w-6xl mx-auto px-6 py-16">
+     <div class="bg-white rounded-3xl shadow-xl p-12">
+      <h2 class="text-4xl font-bold text-center mb-8" style="color: #047857;">ความสำคัญของสมุนไพรพื้นบ้านต่อชุมชน</h2>
+      <div class="space-y-6 text-lg" style="color: #065f46;">
+       <p class="leading-relaxed">🌿 <strong>สมุนไพรพื้นบ้าน</strong>เป็นส่วนสำคัญของวิถีชีวิตและวัฒนธรรมไทยมายาวนาน ช่วยรักษาโรคและบำรุงสุขภาพของคนในชุมชนก่อนที่จะมีการแพทย์สมัยใหม่</p>
+       <p class="leading-relaxed">🏡 <strong>ภูมิปัญญาท้องถิ่น</strong>ที่สืบทอดจากรุ่นสู่รุ่น ทำให้ชุมชนสามารถพึ่งพาตนเองในการดูแลสุขภาพได้อย่างยั่งยืน</p>
+       <p class="leading-relaxed">💚 <strong>ทางเลือกที่ปลอดภัย</strong>และเป็นมิตรกับสิ่งแวดล้อม ช่วยลดการใช้สารเคมีและยาสมัยปัจจุบันที่อาจมีผลข้างเคียง</p>
+       <p class="leading-relaxed">🌍 <strong>อนุรักษ์ความหลากหลายทางชีวภาพ</strong>และส่งเสริมการใช้ทรัพยากรธรรมชาติอย่างยั่งยืนในชุมชน</p>
+      </div>
+     </div>
+    </section>
+   </div><!-- Page: Knowledge -->
+   <div id="page-knowledge" class="page-section">
+    <section class="max-w-6xl mx-auto px-6 py-16">
+     <h1 class="text-5xl font-bold text-center mb-12" style="color: #047857;">ความรู้เกี่ยวกับสมุนไพรพื้นบ้าน</h1>
+     <div class="space-y-8">
+      <div class="section-card bg-white rounded-2xl p-10 shadow-lg">
+       <h2 class="text-3xl font-bold mb-4" style="color: #047857;">🌿 ความหมายของสมุนไพรพื้นบ้าน</h2>
+       <p class="text-lg leading-relaxed" style="color: #065f46;"><strong>สมุนไพรพื้นบ้าน</strong> หมายถึง พืชสมุนไพรที่ขึ้นตามธรรมชาติในท้องถิ่นหรือปลูกไว้ใช้ในครัวเรือน มีสรรพคุณในการรักษาโรคหรือบำรุงร่างกาย ซึ่งถูกใช้และสืบทอดกันมาตั้งแต่สมัยบรรพบุรุษ เป็นภูมิปัญญาท้องถิ่นที่มีคุณค่าและเหมาะสมกับสภาพแวดล้อมของแต่ละพื้นที่</p>
+      </div>
+      <div class="section-card bg-white rounded-2xl p-10 shadow-lg">
+       <h2 class="text-3xl font-bold mb-4" style="color: #047857;">🏔️ แหล่งที่มาของสมุนไพร</h2>
+       <p class="text-lg leading-relaxed mb-4" style="color: #065f46;">สมุนไพรพื้นบ้านไทยมีแหล่งที่มาหลากหลาย:</p>
+       <ul class="space-y-3 text-lg" style="color: #065f46;">
+        <li class="flex items-start"><span class="mr-3">🌳</span> <span><strong>ป่าธรรมชาติ</strong> - สมุนไพรที่ขึ้นเองตามป่าเขา เช่น แก่นฝาง, เลือดแรด, แก่นขี้เหล็ก</span></li>
+        <li class="flex items-start"><span class="mr-3">🏡</span> <span><strong>สวนครัว</strong> - ปลูกไว้ใช้เองในบริเวณบ้าน เช่น ไพล, ว่านหางช้าง, ตองแตก</span></li>
+        <li class="flex items-start"><span class="mr-3">🌾</span> <span><strong>ท้องนาและที่ชุ่มน้ำ</strong> - พื้นที่เกษตรกรรม เช่น คำฝอย, เสนียด</span></li>
+        <li class="flex items-start"><span class="mr-3">⛰️</span> <span><strong>ภูเขาสูง</strong> - พื้นที่สูงในภาคเหนือ เช่น แกแล, เทียนดำ</span></li>
+       </ul>
+      </div>
+      <div class="section-card bg-white rounded-2xl p-10 shadow-lg">
+       <h2 class="text-4xl font-bold text-center mb-8" style="color: #047857;">💚 ความสำคัญต่อสุขภาพและวิถีชีวิตไทย</h2>
+       <div class="grid md:grid-cols-2 gap-6 text-lg" style="color: #065f46;">
+        <div class="space-y-3">
+         <p><strong>📍 ด้านสุขภาพ:</strong></p>
+         <ul class="space-y-2 ml-6">
+          <li>• ช่วยรักษาโรคเบื้องต้น</li>
+          <li>• บำรุงร่างกายและเสริมสร้างภูมิคุ้มกัน</li>
+          <li>• ปลอดภัยกว่ายาสมัยใหม่</li>
+          <li>• ราคาถูกและหาได้ง่าย</li>
+         </ul>
+        </div>
+        <div class="space-y-3">
+         <p><strong>📍 ด้านวิถีชีวิต:</strong></p>
+         <ul class="space-y-2 ml-6">
+          <li>• เป็นภูมิปัญญาท้องถิ่นที่สืบทอด</li>
+          <li>• ส่งเสริมการพึ่งพาตนเอง</li>
+          <li>• สร้างความเข้มแข็งให้ชุมชน</li>
+          <li>• อนุรักษ์วัฒนธรรมไทย</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+      <div class="section-card bg-white rounded-2xl p-10 shadow-lg">
+       <h2 class="text-3xl font-bold mb-4" style="color: #047857;">⏳ การใช้สมุนไพรในอดีตและปัจจุบัน</h2>
+       <div class="grid md:grid-cols-2 gap-8">
+        <div class="space-y-4">
+         <h3 class="text-2xl font-semibold" style="color: #059669;">🕰️ อดีต</h3>
+         <ul class="space-y-2 text-lg" style="color: #065f46;">
+          <li>• ใช้เป็นยาหลักในการรักษาโรค</li>
+          <li>• หมอพื้นบ้านมีบทบาทสำคัญ</li>
+          <li>• สืบทอดความรู้แบบปากต่อปาก</li>
+          <li>• เก็บรักษาในรูปแบบแห้ง</li>
+          <li>• ใช้ในพิธีกรรมและความเชื่อ</li>
+         </ul>
+        </div>
+        <div class="space-y-4">
+         <h3 class="text-2xl font-semibold" style="color: #059669;">🔬 ปัจจุบัน</h3>
+         <ul class="space-y-2 text-lg" style="color: #065f46;">
+          <li>• ผสมผสานกับการแพทย์แผนปัจจุบัน</li>
+          <li>• มีการวิจัยทางวิทยาศาสตร์</li>
+          <li>• พัฒนาเป็นผลิตภัณฑ์สุขภาพ</li>
+          <li>• มีมาตรฐานการผลิตที่ชัดเจน</li>
+          <li>• ส่งเสริมเป็นแหล่งท่องเที่ยว</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Page: List -->
+   <div id="page-list" class="page-section">
+    <section class="max-w-7xl mx-auto px-6 py-16">
+     <h1 class="text-5xl font-bold text-center mb-4" style="color: #047857;">รายชื่อสมุนไพรพื้นบ้านไทย</h1>
+     <p class="text-xl text-center mb-12" style="color: #059669;">สมุนไพรไทย 10 ชนิด - คลิกเพื่อค้นหาข้อมูลเพิ่มเติม</p>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="แกแล">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🌾
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c1.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">1. แกแล</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> แกแล, กระเจียว</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">พืชสมุนไพรที่มีสรรพคุณในการบำรุงร่างกาย บำรุงธาตุ แก้ปวดเมื่อย มักนำมาต้มดื่มหรือแช่เหล้า ช่วยเสริมสร้างความแข็งแรงให้กับร่างกาย</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+      </div>
+      </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="แก่นฝาง">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🪵
+       </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c10.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">2. แก่นฝาง</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> แก่นฝาง, ไม้แก่นฝาง</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">ไม้มีค่าที่มีสรรพคุณบำรุงเลือด แก้ไข้ ลดอาการอักเสบ นิยมนำมาต้มดื่มเป็นยาบำรุงร่างกาย ช่วยให้ผิวพรรณสดใส</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="เลือดแรด">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🩸
+        </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c2.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">3. เลือดแรด</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> เลือดแรด, ยอแรด</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">ยางไม้สีแดงเข้มที่มีสรรพคุณบำรุงโลหิต แก้เลือดลม ช่วยเจริญอาหาร บำรุงธาตุในร่างกาย เป็นยาบำรุงที่มีชื่อเสียง</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+       </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="เสนียด">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🌿
+        </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c3.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">4. เสนียด</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> เสนียด, กำลังม้า</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณแก้ไข้ ลดอาการปวด ขับลมในลำไส้ ช่วยแก้ท้องอืด ท้องเฟ้อ นิยมนำมาต้มดื่มหรือใช้ภายนอก</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="คำฝอย">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🌸
+        </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c4.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">5. คำฝอย</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> คำฝอย, หญ้าคำฝอย</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณบำรุงหัวใจ บำรุงกำลัง แก้อ่อนเพลีย ช่วยเพิ่มความแข็งแรงให้ร่างกาย นิยมชงเป็นชาดื่ม</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="ว่านหางช้าง">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🐘
+        </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c5.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">6. ว่านหางช้าง</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> ว่านหางช้าง, หางช้าง</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณแก้ฟกช้ำ บวม แผลถลอก ช่วยบำรุงร่างกาย เสริมสร้างความแข็งแรง นิยมนำมาทาหรือพอก</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="ตองแตก">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🍌
+         </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c6.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">7. ตองแตก</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> ตองแตก, กล้วยป่า</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณแก้ร้อนใน บรรเทาอาการระคายคอ ช่วยแก้ไอ ขับเสมหะ นิยมนำมาต้มดื่มเป็นยาแก้ไอ</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="เทียนดำ">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🕯️
+       </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c7.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">8. เทียนดำ</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> เทียนดำ, ขี้เทียนดำ</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณขับลม แก้ปวดท้อง ท้องเสีย ช่วยระบบย่อยอาหาร แก้อาหารไม่ย่อย นิยมต้มดื่ม</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="แก่นขี้เหล็ก">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         ⚒️
+         </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c8.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">9. แก่นขี้เหล็ก</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> แก่นขี้เหล็ก, ไม้แก่นขี้เหล็ก</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณแก้นอนไม่หลับ บำรุงกระดูก เสริมความแข็งแรงของร่างกาย ช่วยให้นอนหลับสนิท</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+      <div class="herb-card bg-white rounded-2xl p-8 shadow-lg" data-search="ไพล">
+       <div class="flex items-start space-x-6">
+        <div class="text-6xl">
+         🌱
+      </div>
+<div class="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition">
+      <img src="images/c9.jpg" class="mx-auto w-32 h-32 object-cover rounded-xl mb-4">
+        <div class="flex-1">
+         <h2 class="text-3xl font-bold mb-3" style="color: #047857;">10. ไพล</h2>
+         <p class="text-lg mb-3" style="color: #059669;"><strong>ชื่อเรียกทั่วไป:</strong> ไพล, กระชาย</p>
+         <p class="text-base leading-relaxed" style="color: #065f46;">สมุนไพรที่มีสรรพคุณแก้ปวดเมื่อย ขับลม แก้ท้องอืด ช่วยย่อยอาหาร นิยมนำมาพอก ทา หรือต้มดื่ม</p><button class="mt-4 px-6 py-2 rounded-full font-semibold" style="background: #dcfce7; color: #047857;"> คลิกดูรายละเอียด → </button>
+        </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Page: Benefits -->
+   <div id="page-benefits" class="page-section">
+    <section class="max-w-6xl mx-auto px-6 py-16">
+     <h1 class="text-5xl font-bold text-center mb-4" style="color: #047857;">สรรพคุณและประโยชน์</h1>
+     <p class="text-xl text-center mb-12" style="color: #059669;">คุณสมบัติเด่นของสมุนไพรแต่ละชนิด</p>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🌾</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">แกแล</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ บำรุงร่างกาย เสริมสร้างความแข็งแรง</li>
+        <li>✓ บำรุงธาตุทั้งสี่</li>
+        <li>✓ แก้ปวดเมื่อยตามร่างกาย</li>
+        <li>✓ เพิ่มความแข็งแกร่ง</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🪵</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">แก่นฝาง</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ บำรุงเลือด ทำให้ผิวพรรณสดใส</li>
+        <li>✓ แก้ไข้ ลดอาการอักเสบ</li>
+        <li>✓ บำรุงร่างกายให้แข็งแรง</li>
+        <li>✓ ช่วยให้หลับสนิท</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🩸</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">เลือดแรด</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ บำรุงโลหิต เพิ่มเม็ดเลือดแดง</li>
+        <li>✓ แก้เลือดลม เลือดจาง</li>
+        <li>✓ ช่วยเจริญอาหาร</li>
+        <li>✓ บำรุงธาตุในร่างกาย</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🌿</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">เสนียด</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ แก้ไข้ ลดไข้</li>
+        <li>✓ ลดอาการปวดศีรษะ</li>
+        <li>✓ ขับลมในลำไส้</li>
+        <li>✓ แก้ท้องอืด ท้องเฟ้อ</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🌸</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">คำฝอย</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ บำรุงหัวใจ เสริมสร้างหัวใจ</li>
+        <li>✓ บำรุงกำลัง ลดความอ่อนเพลีย</li>
+        <li>✓ แก้อ่อนเพลีย เหนื่อยง่าย</li>
+        <li>✓ เพิ่มความแข็งแรงให้ร่างกาย</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🐘</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">ว่านหางช้าง</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ แก้ฟกช้ำ บวม</li>
+        <li>✓ แก้แผลถลอก แผลฉีกขาด</li>
+        <li>✓ บำรุงร่างกาย</li>
+        <li>✓ เสริมสร้างความแข็งแรง</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🍌</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">ตองแตก</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ แก้ร้อนใน คอแห้ง</li>
+        <li>✓ บรรเทาอาการระคายคอ</li>
+        <li>✓ ช่วยแก้ไอ ขับเสมหะ</li>
+        <li>✓ บำรุงปอด</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🕯️</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">เทียนดำ</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ ขับลม แก้ลมในท้อง</li>
+        <li>✓ แก้ปวดท้อง ท้องเสีย</li>
+        <li>✓ ช่วยระบบย่อยอาหาร</li>
+        <li>✓ แก้อาหารไม่ย่อย</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">⚒️</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">แก่นขี้เหล็ก</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ แก้นอนไม่หลับ ช่วยให้หลับสนิท</li>
+        <li>✓ บำรุงกระดูก แข็งแรง</li>
+        <li>✓ เสริมความแข็งแรงของร่างกาย</li>
+        <li>✓ แก้อาการเครียด กังวล</li>
+       </ul>
+      </div>
+      <div class="benefit-badge bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 shadow-lg border-2 border-green-200">
+       <div class="flex items-center space-x-4 mb-3"><span class="text-5xl">🌱</span>
+        <h2 class="text-2xl font-bold" style="color: #047857;">ไพล</h2>
+       </div>
+       <ul class="space-y-2 text-lg" style="color: #065f46;">
+        <li>✓ แก้ปวดเมื่อยตามร่างกาย</li>
+        <li>✓ ขับลม แก้ท้องอืด</li>
+        <li>✓ ช่วยย่อยอาหาร</li>
+        <li>✓ บรรเทาอาการปวดข้อ ปวดกล้ามเนื้อ</li>
+       </ul>
+      </div>
+     </div>
+    </section>
+   </div><!-- Page: Usage -->
+   <div id="page-usage" class="page-section">
+    <section class="max-w-6xl mx-auto px-6 py-16">
+     <h1 class="text-5xl font-bold text-center mb-4" style="color: #047857;">วิธีการใช้และข้อควรระวัง</h1>
+     <p class="text-xl text-center mb-12" style="color: #059669;">แนวทางการใช้สมุนไพรอย่างถูกวิธีและปลอดภัย</p>
+     <div class="space-y-8">
+      <div class="bg-white rounded-3xl p-10 shadow-xl">
+       <h2 class="text-4xl font-bold mb-8 text-center" style="color: #047857;">🌿 วิธีการนำสมุนไพรไปใช้</h2>
+       <div class="space-y-8">
+        <div class="section-card bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 border-l-4" style="border-color: #047857;">
+         <h3 class="text-3xl font-bold mb-4" style="color: #047857;">💧 การต้มดื่ม</h3>
+         <p class="text-lg mb-4" style="color: #065f46;"><strong>เหมาะสำหรับ:</strong> แก่นฝาง, ตองแตก, เลือดแรด, เทียนดำ, แก่นขี้เหล็ก</p>
+         <div class="space-y-3 text-lg" style="color: #065f46;">
+          <p><strong>ขั้นตอน:</strong></p>
+          <ol class="ml-6 space-y-2">
+           <li>1. ล้างสมุนไพรให้สะอาด</li>
+           <li>2. ใช้สมุนไพรสด หรือแห้ง ประมาณ 1-2 กำมือ</li>
+           <li>3. ต้มกับน้ำ 3-4 แก้ว นาน 15-20 นาที</li>
+           <li>4. กรองเอาแต่น้ำ ดื่มวันละ 2-3 ครั้ง</li>
+           <li>5. ควรดื่มหลังอาหาร</li>
+          </ol>
+         </div>
+        </div>
+        <div class="section-card bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 border-l-4" style="border-color: #059669;">
+         <h3 class="text-3xl font-bold mb-4" style="color: #047857;">🧴 การพอก/ทา</h3>
+         <p class="text-lg mb-4" style="color: #065f46;"><strong>เหมาะสำหรับ:</strong> ไพล, ว่านหางช้าง</p>
+         <div class="space-y-3 text-lg" style="color: #065f46;">
+          <p><strong>ขั้นตอน:</strong></p>
+          <ol class="ml-6 space-y-2">
+           <li>1. ล้างสมุนไพรสดให้สะอาด</li>
+           <li>2. ตำหรือบดให้ละเอียด</li>
+           <li>3. พอกบริเวณที่เจ็บ ฟกช้ำ หรือบวม</li>
+           <li>4. ทิ้งไว้ 20-30 นาที</li>
+           <li>5. ล้างออกด้วยน้ำสะอาด</li>
+           <li>6. ทำวันละ 2-3 ครั้ง</li>
+          </ol>
+         </div>
+        </div>
+        <div class="section-card bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 border-l-4" style="border-color: #10b981;">
+         <h3 class="text-3xl font-bold mb-4" style="color: #047857;">🍵 การชงเป็นชา</h3>
+         <p class="text-lg mb-4" style="color: #065f46;"><strong>เหมาะสำหรับ:</strong> คำฝอย, เสนียด, แกแล</p>
+         <div class="space-y-3 text-lg" style="color: #065f46;">
+          <p><strong>ขั้นตอน:</strong></p>
+          <ol class="ml-6 space-y-2">
+           <li>1. ใช้สมุนไพรแห้งประมาณ 1-2 ช้อนชา</li>
+           <li>2. ชงด้วยน้ำร้อน 1 แก้ว</li>
+           <li>3. ปิดฝาทิ้งไว้ 5-10 นาที</li>
+           <li>4. ดื่มขณะอุ่น</li>
+           <li>5. สามารถเติมน้ำผึ้งเพิ่มรสชาติได้</li>
+          </ol>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-3xl p-10 shadow-xl">
+       <h2 class="text-4xl font-bold mb-8 text-center" style="color: #dc2626;">⚠️ ข้อควรระวังในการใช้สมุนไพร</h2>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+         <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+          <h3 class="text-2xl font-bold mb-3" style="color: #dc2626;">⚖️ ไม่ควรใช้เกินขนาด</h3>
+          <ul class="space-y-2 text-lg" style="color: #991b1b;">
+           <li>• ใช้ตามขนาดที่แนะนำเท่านั้น</li>
+           <li>• ใช้เกินอาจเกิดผลข้างเคียง</li>
+           <li>• หากมีอาการผิดปกติให้หยุดใช้</li>
+          </ul>
+         </div>
+         <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+          <h3 class="text-2xl font-bold mb-3" style="color: #dc2626;">🤰 สตรีมีครรภ์</h3>
+          <ul class="space-y-2 text-lg" style="color: #991b1b;">
+           <li>• ควรปรึกษาแพทย์ก่อนใช้</li>
+           <li>• บางชนิดอาจไม่เหมาะ</li>
+           <li>• ระมัดระวังเป็นพิเศษ</li>
+          </ul>
+         </div>
+         <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+          <h3 class="text-2xl font-bold mb-3" style="color: #dc2626;">👶 เด็กเล็ก</h3>
+          <ul class="space-y-2 text-lg" style="color: #991b1b;">
+           <li>• ลดปริมาณลงครึ่งหนึ่ง</li>
+           <li>• สังเกตอาการหลังใช้</li>
+           <li>• ปรึกษาผู้เชี่ยวชาญก่อนใช้</li>
+          </ul>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+          <h3 class="text-2xl font-bold mb-3" style="color: #dc2626;">💊 ผู้ป่วยโรคเรื้อรัง</h3>
+          <ul class="space-y-2 text-lg" style="color: #991b1b;">
+           <li>• ปรึกษาแพทย์ก่อนใช้</li>
+           <li>• อาจมีปฏิกิริยากับยาที่กินอยู่</li>
+           <li>• ติดตามอาการอย่างใกล้ชิด</li>
+          </ul>
+         </div>
+         <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+          <h3 class="text-2xl font-bold mb-3" style="color: #dc2626;">🛒 การเลือกซื้อ</h3>
+          <ul class="space-y-2 text-lg" style="color: #991b1b;">
+           <li>• เลือกแหล่งที่เชื่อถือได้</li>
+           <li>• ตรวจสอบคุณภาพก่อนใช้</li>
+           <li>• เก็บในภาชนะที่แห้ง สะอาด</li>
+          </ul>
+         </div>
+         <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+          <h3 class="text-2xl font-bold mb-3" style="color: #dc2626;">⏰ ระยะเวลา</h3>
+          <ul class="space-y-2 text-lg" style="color: #991b1b;">
+           <li>• ไม่ควรใช้ติดต่อกันนานเกิน 1 เดือน</li>
+           <li>• หากอาการไม่ดีขึ้นให้พบแพทย์</li>
+           <li>• พักการใช้ทุก 2-3 สัปดาห์</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+       <div class="mt-8 bg-yellow-50 rounded-xl p-6 border-2 border-yellow-300">
+        <p class="text-xl text-center font-semibold" style="color: #92400e;">⚠️ หมายเหตุ: สมุนไพรไม่สามารถทดแทนการรักษาทางการแพทย์ได้ หากมีอาการรุนแรงควรพบแพทย์โดยเร็ว</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Page: About -->
+   <div id="page-about" class="page-section">
+    <section class="max-w-5xl mx-auto px-6 py-16">
+     <h1 class="text-5xl font-bold text-center mb-12" style="color: #047857;">เกี่ยวกับเรา</h1>
+     <div class="space-y-8">
+      <div class="bg-white rounded-3xl p-10 shadow-xl">
+       <div class="text-center mb-8"><span class="text-7xl"><p align="center"><img src="D:/67114672003/BK/1.jpg" width="100"></span>
+       </div>
+       <h2 class="text-3xl font-bold text-center mb-6" style="color: #047857;">ข้อมูลผู้จัดทำ</h2>
+       <div class="space-y-4 text-lg text-center" style="color: #065f46;">
+        <p><strong>ชื่อผู้จัดทำ:</strong> <span id="creator-name">นายรังษิมันต์ สมบุญ</span></p>
+        <p><strong>วัตถุประสงค์:</strong> เผยแพร่ความรู้เกี่ยวกับสมุนไพรพื้นบ้านไทย</p>
+        <p><strong>โครงการ:</strong> เว็บไซต์คลังความรู้สมุนไพรไทย</p>
+       </div>
+      </div>
+      <div class="bg-white rounded-3xl p-10 shadow-xl">
+       <h2 class="text-3xl font-bold mb-6" style="color: #047857;">🎯 วัตถุประสงค์ของเว็บไซต์</h2>
+       <div class="space-y-4 text-lg" style="color: #065f46;">
+        <p class="flex items-start"><span class="mr-3">📚</span> <span>รวบรวมและเผยแพร่ความรู้เกี่ยวกับสมุนไพรพื้นบ้านไทยให้แก่ประชาชนทั่วไป</span></p>
+        <p class="flex items-start"><span class="mr-3">🌱</span> <span>อนุรักษ์และสืบทอดภูมิปัญญาการใช้สมุนไพรไทยสู่คนรุ่นใหม่</span></p>
+        <p class="flex items-start"><span class="mr-3">💡</span> <span>สร้างความตระหนักถึงคุณค่าของสมุนไพรพื้นบ้านในการดูแลสุขภาพ</span></p>
+        <p class="flex items-start"><span class="mr-3">✅</span> <span>ส่งเสริมการใช้สมุนไพรอย่างถูกวิธีและปลอดภัย</span></p>
+        <p class="flex items-start"><span class="mr-3">📖</span> <span>เป็นแหล่งข้อมูลกลางสำหรับผู้ที่สนใจศึกษาเกี่ยวกับสมุนไพรไทย</span></p>
+       </div>
+      </div>
+      <div class="bg-white rounded-3xl p-10 shadow-xl">
+       <h2 class="text-3xl font-bold mb-6" style="color: #047857;">📖 แหล่งอ้างอิงข้อมูล</h2>
+       <div class="space-y-3 text-lg" style="color: #065f46;">
+        <p>• ตำราแพทย์แผนไทย กรมพัฒนาการแพทย์แผนไทยและการแพทย์ทางเลือก</p>
+        <p>• หนังสือสมุนไพรไทย โดย ศาสตราจารย์ ดร. ประสาท สุขุมพันธุ์วงศ์</p>
+        <p>• ฐานข้อมูลสมุนไพรไทย มหาวิทยาลัยมหิดล</p>
+        <p>• ความรู้จากผู้เชี่ยวชาญและหมอพื้นบ้าน</p>
+        <p>• งานวิจัยทางวิทยาศาสตร์เกี่ยวกับสมุนไพรไทย</p>
+       </div>
+      </div>
+      <div class="bg-white rounded-3xl p-10 shadow-xl">
+       <h2 class="text-3xl font-bold text-center mb-6" style="color: #047857;">📧 ติดต่อเรา</h2>
+       <p class="text-lg text-center mb-8" style="color: #065f46;">หากคุณมีคำถาม ข้อเสนอแนะ หรือต้องการสอบถามข้อมูลเพิ่มเติม กรุณากรอกแบบฟอร์มด้านล่าง</p>
+       <form id="contactForm" class="max-w-2xl mx-auto space-y-6">
+        <div><label for="contact-name" class="block text-lg font-semibold mb-2" style="color: #047857;">ชื่อ-นามสกุล *</label> <input type="text" id="contact-name" name="name" required placeholder="กรุณากรอกชื่อของคุณ" class="w-full px-4 py-3 rounded-xl border-2 border-green-200 focus:border-green-500 focus:outline-none transition-colors text-lg" style="font-family: 'IBM Plex Sans Thai', sans-serif;">
+        </div>
+        <div><label for="contact-email" class="block text-lg font-semibold mb-2" style="color: #047857;">อีเมล *</label> <input type="email" id="contact-email" name="email" required placeholder="example@email.com" class="w-full px-4 py-3 rounded-xl border-2 border-green-200 focus:border-green-500 focus:outline-none transition-colors text-lg" style="font-family: 'IBM Plex Sans Thai', sans-serif;">
+        </div>
+        <div><label for="contact-subject" class="block text-lg font-semibold mb-2" style="color: #047857;">หัวข้อ *</label> <input type="text" id="contact-subject" name="subject" required placeholder="เรื่องที่ต้องการติดต่อ" class="w-full px-4 py-3 rounded-xl border-2 border-green-200 focus:border-green-500 focus:outline-none transition-colors text-lg" style="font-family: 'IBM Plex Sans Thai', sans-serif;">
+        </div>
+        <div><label for="contact-message" class="block text-lg font-semibold mb-2" style="color: #047857;">ข้อความ *</label> <textarea id="contact-message" name="message" required rows="6" placeholder="กรุณากรอกข้อความที่ต้องการสื่อสาร..." class="w-full px-4 py-3 rounded-xl border-2 border-green-200 focus:border-green-500 focus:outline-none transition-colors resize-none text-lg" style="font-family: 'IBM Plex Sans Thai', sans-serif;"></textarea>
+        </div>
+        <div class="text-center"><button type="submit" id="submitBtn" class="px-8 py-4 rounded-xl text-white text-xl font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105" style="background: linear-gradient(135deg, #047857, #10b981);"> 📩 ส่งข้อความ </button>
+        </div>
+        <div id="formMessage" class="hidden text-center p-4 rounded-xl"></div>
+       </form>
+<!-- เพิ่มช่องทางการติดต่อ (โค้ดของ Bank) -->
+    <section class="bg-white rounded-2xl shadow-lg p-10">
+      
+      <p class="text-2xl font-bold text-green-700">
+        💬 ช่องทางการติดต่อ
+      </p>
+
+      <div class="mt-6">
+        <a href="https://web.facebook.com/bank.bk.3785"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="inline-flex items-center space-x-3
+                  bg-blue-600 hover:bg-blue-700
+                  text-white px-8 py-4
+                  rounded-lg shadow-lg hover:shadow-xl
+                  transition-all duration-300
+                  text-lg font-semibold">
+
+          <span class="text-3xl">📘</span>
+          <span>Facebook: Bank</span>
+        </a>
+      </div>
+
+    </section>
+      </div>
+      <div class="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl p-10 shadow-xl text-white text-center">
+       <h2 class="text-3xl font-bold mb-4">ขอบคุณที่เยี่ยมชมเว็บไซต์</h2>
+       <p class="text-xl mb-4">🌿 สมุนไพรพื้นบ้านไทย 🌿</p>
+       <p class="text-lg">ร่วมกันอนุรักษ์และสืบทอดภูมิปัญญาไทยสู่คนรุ่นใหม่</p>
+      </div>
+     </div>
+    </section>
+   </div><!-- Footer -->
+   <footer class="py-12 px-6 mt-16 hero-gradient">
+    <div class="max-w-6xl mx-auto">
+     <div class="grid md:grid-cols-3 gap-8 mb-8">
+      <div class="text-white">
+       <h3 class="text-2xl font-bold mb-4">สมุนไพรพื้นบ้านไทย</h3>
+       <p class="text-green-100">คลังความรู้ภูมิปัญญาไทยที่สืบทอดมายาวนาน</p>
+      </div>
+       <div class="text-white">
+       <h3 class="text-2xl font-bold mb-4">เมนูหลัก</h3>
+       <ul class="space-y-2 text-green-100">
+        <li><a href="#" class="footer-nav-link hover:text-white transition-colors" data-page="home">หน้าแรก</a></li>
+        <li><a href="#" class="footer-nav-link hover:text-white transition-colors" data-page="knowledge">ความรู้สมุนไพร</a></li>
+        <li><a href="#" class="footer-nav-link hover:text-white transition-colors" data-page="list">รายชื่อสมุนไพร</a></li>
+        <li><a href="#" class="footer-nav-link hover:text-white transition-colors" data-page="benefits">สรรพคุณ</a></li>
+        <li><a href="#" class="footer-nav-link hover:text-white transition-colors" data-page="usage">วิธีใช้</a></li>
+        <li><a href="#" class="footer-nav-link hover:text-white transition-colors" data-page="about">เกี่ยวกับเรา</a></li>
+       </ul>
+      </div>
+      <div class="text-white">
+       <h3 class="text-2xl font-bold mb-4">ติดต่อเรา</h3>
+       <p class="text-green-100">โทร 093-227-9464<br>
+     
+      </div>
+     </div>
+
+     <div class="border-t border-green-400 pt-6 text-center text-white">
+      <p class="text-lg">© 2026 สมุนไพรพื้นบ้านไทย | ภูมิปัญญาไทยเพื่อสุขภาพที่ดี 🌿</p>
+     </div>
+    </div>
+   </footer><!-- Scroll to Top Button -->
+   <div id="scrollToTop" class="scroll-to-top" title="กลับขึ้นด้านบน">
+    ↑
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      site_title: "สมุนไพรพื้นบ้านไทย",
+      site_tagline: "ภูมิปัญญาไทยเพื่อสุขภาพที่ดี",
+      creator_name: "Bank"
+    };
+
+    let config = { ...defaultConfig };
+
+    async function onConfigChange(newConfig) {
+      config = { ...newConfig };
+      
+      document.getElementById('nav-title').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('nav-tagline').textContent = config.site_tagline || defaultConfig.site_tagline;
+      document.getElementById('hero-title').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('creator-name').textContent = config.creator_name || defaultConfig.creator_name;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["site_title", config.site_title || defaultConfig.site_title],
+        ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
+        ["creator_name", config.creator_name || defaultConfig.creator_name]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page-section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        
+        const targetPage = this.getAttribute('data-page');
+        
+        pages.forEach(page => {
+          page.classList.remove('active');
+        });
+        
+        document.getElementById(`page-${targetPage}`).classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    document.querySelectorAll('.herb-card[data-search]').forEach(card => {
+      card.addEventListener('click', function() {
+        const herbName = this.getAttribute('data-search');
+        const searchUrl = `https://www.google.com/search?q=สมุนไพร${herbName}`;
+        window.open(searchUrl, '_blank', 'noopener,noreferrer');
+      });
+    });
+
+    document.querySelectorAll('.herb-card[data-herb]').forEach(card => {
+      card.addEventListener('click', function() {
+        const herbName = this.getAttribute('data-herb');
+        const searchUrl = `https://www.google.com/search?q=สมุนไพร${herbName}`;
+        window.open(searchUrl, '_blank', 'noopener,noreferrer');
+      });
+    });
+
+    document.querySelectorAll('.footer-nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        navLinks.forEach(l => l.classList.remove('active'));
+        
+        const targetPage = this.getAttribute('data-page');
+        
+        pages.forEach(page => {
+          page.classList.remove('active');
+        });
+        
+        document.getElementById(`page-${targetPage}`).classList.add('active');
+        
+        const correspondingNavLink = document.querySelector(`.nav-link[data-page="${targetPage}"]`);
+        if (correspondingNavLink) {
+          correspondingNavLink.classList.add('active');
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    const appWrapper = document.getElementById('app-wrapper');
+
+    appWrapper.addEventListener('scroll', function() {
+      if (appWrapper.scrollTop > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', function() {
+      appWrapper.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Contact form handling
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ กำลังส่ง...';
+      submitBtn.style.opacity = '0.6';
+      
+      const name = document.getElementById('contact-name').value;
+      const email = document.getElementById('contact-email').value;
+      
+      setTimeout(() => {
+        formMessage.classList.remove('hidden');
+        formMessage.style.background = '#dcfce7';
+        formMessage.style.color = '#047857';
+        formMessage.style.border = '2px solid #10b981';
+        formMessage.innerHTML = `
+          <div class="text-lg">
+            <strong>✅ ส่งข้อความสำเร็จ!</strong><br>
+            ขอบคุณ <strong>${name}</strong> ที่ติดต่อเรา<br>
+            เราจะตอบกลับไปที่อีเมล <strong>${email}</strong> โดยเร็วที่สุด
+          </div>
+        `;
+        
+        contactForm.reset();
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = '📩 ส่งข้อความ';
+        submitBtn.style.opacity = '1';
+        
+        setTimeout(() => {
+          formMessage.classList.add('hidden');
+        }, 5000);
+      }, 1500);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c7982b366624b65',t:'MTc3MDAzMzQ0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>  
